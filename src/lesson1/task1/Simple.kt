@@ -66,7 +66,7 @@ fun main() {
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
 fun seconds(hours: Int, minutes: Int, seconds: Int): Int =
-    (hours * 60 + minutes) * 60 + seconds
+    (hours * 60 + minutes) * 60+ seconds
 
 /**
  * Тривиальная (1 балл)
@@ -99,7 +99,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = TODO()
  * Пользователь задает целое число, большее 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int = number / 100 % 10
+fun thirdDigit(number: Int): Int = number / 100 %10
 
 /**
  * Простая (2 балла)
