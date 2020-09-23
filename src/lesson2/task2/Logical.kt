@@ -62,25 +62,36 @@ fun circleInside(
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     var minBrick = 0
     var preminBrick = 0
-    if (a < b) {
-        minBrick = a
-        preminBrick = b
-    }
-    else {
-        preminBrick = a
-        minBrick = b
-    }
-    if (c < preminBrick) {
-        if (c < minBrick) {
-            preminBrick = minBrick
-            minBrick = c
+    var vkl: Boolean = false
+    when {
+        a <= b && b <= c -> {
+            minBrick = a
+            preminBrick = b
         }
-        else
+        b <= a && a <= c -> {
+            minBrick = b
+            preminBrick = a
+        }
+        b <= c && c <= a -> {
+            minBrick = b
             preminBrick = c
-
+        }
+        a <= c && c <= b -> {
+            minBrick = a
+            preminBrick = c
+        }
+        c <= a && a <= b -> {
+            minBrick = c
+            preminBrick = a
+        }
+        c <= a && b <= a -> {
+            minBrick = c
+            preminBrick = b
+        }
     }
-   if(minBrick <= r || minBrick <= s && preminBrick <= r && preminBrick <= s)
-       return true
-    else
-       return false
+    when {
+        r <= s && r >= minBrick && s >= preminBrick -> vkl = true
+        s <= r && s >= minBrick && r >= preminBrick -> vkl = true
+    }
+    return vkl
 }
