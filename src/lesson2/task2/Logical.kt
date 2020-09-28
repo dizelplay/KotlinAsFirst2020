@@ -62,7 +62,6 @@ fun circleInside(
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     var minBrick = 0
     var preminBrick = 0
-    var vkl: Boolean = false
     when {
         a <= b && b <= c -> {
             minBrick = a
@@ -90,8 +89,10 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
         }
     }
     when {
-        r <= s && r >= minBrick && s >= preminBrick -> vkl = true
-        s <= r && s >= minBrick && r >= preminBrick -> vkl = true
+        r <= s && r >= minBrick && s >= preminBrick -> return true
+        s <= r && s >= minBrick && r >= preminBrick -> return true
+        else -> return false
     }
-    return vkl
+
+
 }

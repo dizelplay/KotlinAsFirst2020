@@ -142,5 +142,5 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
         c <= a && d <= b -> sum = d - a
         c <= a && b <= d -> sum = b - a
     }
-return sum
+    return sum
 }
