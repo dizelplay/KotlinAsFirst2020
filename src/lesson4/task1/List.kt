@@ -250,4 +250,96 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val odin = listOf("0", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val ten =
+        listOf(
+            "0",
+            "1",
+            "двадцать",
+            "тридцать",
+            "сорок",
+            "пятьдесят",
+            "шестьдесят",
+            "семьдесят",
+            "восемьдесят",
+            "девяносто"
+        )
+    val sto =
+        listOf("0", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    val k = listOf("тысяч", "тысячи", "тысяча")
+    val iskl = listOf(
+        "десять",
+        "одиннадцать",
+        "двенадцать",
+        "тринадцать",
+        "четырнадцать",
+        "пятнадцать",
+        "шестнадцать",
+        "семнадцать",
+        "восемнадцать",
+        "девятнадцать"
+    )
+    var schet = 0
+    var a = n
+    var b = 0
+    var c = a
+    var d = 0
+    var otvet: String = "0"
+    if (a % 100 < 20 && a % 100 > 9) {
+        b = a
+        b = b % 10
+        otvet = (iskl[b]).plus(otvet)
+        schet = schet + 2
+        b = 0
+        a = a / 100
+    }
+    while (a > 0) {
+        b = a % 10
+        schet++
+        if (schet == 4) {
+            when {
+                b == 1 -> d = 2
+                b < 5 && b > 1 -> d = 1
+                else -> d = 0
+            }
+            if (c % 100 != 0)
+                otvet = (k[d]).plus(" ").plus(otvet)
+            else
+                otvet = (k[d]).plus(otvet)
+
+        }
+        if (b != 0) {
+            when {
+                schet == 1 -> otvet = (odin[b]).plus(otvet)
+                schet == 2 -> otvet = (ten[b]).plus(" ").plus(otvet)
+                schet == 3 -> otvet = (sto[b]).plus(" ").plus(otvet)
+            }
+
+            when {
+                schet == 4 -> {
+
+                    if (a % 100 < 20 && a % 100 > 9) {
+                        b = a
+                        b = b % 10
+                        otvet = (iskl[b]).plus(" ").plus(otvet)
+                        schet++
+                        b = 0
+                        a = a / 10
+                    } else {
+                        when {
+                            b == 1 -> otvet = ("одна").plus(" ").plus(otvet)
+                            b == 2 -> otvet = ("две").plus(" ").plus(otvet)
+                            else -> otvet = (odin[b]).plus(" ").plus(otvet)
+                        }
+                    }
+                }
+                schet == 5 -> otvet = (ten[b]).plus(" ").plus(otvet)
+                schet == 6 -> otvet = (sto[b]).plus(" ").plus(otvet)
+            }
+        }
+        a = a / 10
+    }
+    otvet = otvet.replace("0", "")
+    return otvet
+}
