@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -202,27 +203,29 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var kolvo = 0
-    var chislo = 0
-    var chislo2 = 0
+    var amount = 0
+    var number = 0
+    var number2 = 0
     var a = 0
-    while (kolvo < n) {
+    var doubleswitch = 0.0
+    while (amount < n) {
         a++
-        chislo = a * a
-        chislo2 = chislo
-        while (chislo > 0) {
-            chislo = chislo / 10
-            kolvo++
+        number = a * a
+        number2 = number
+        while (number > 0) {
+            number /= 10
+            amount++
         }
     }
-    if (n != kolvo) {
-        kolvo = kolvo - n
-        for (i in 0..kolvo - 1)
-            chislo2 = chislo2 / 10
+    if (n != amount) {
+        amount -= n
+        doubleswitch = 10.0.pow(amount)
+        amount = doubleswitch.toInt()
+        number2 /= amount
     }
-    if (chislo2 >= 10)
-        chislo2 = chislo2 % 10
-    return chislo2
+    number2 %= 10
+    return number2
+
 }
 
 /**
@@ -235,29 +238,30 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var kolvo = 2
-    var chislo = 0
+    var amount = 2
+    var number = 0
     var fibo1 = 1
     var fibo2 = 1
     var a = 0
+    var doubleswitch = 0.0
     if (n > 2) {
-        while (kolvo < n) {
+        while (amount < n) {
             a = fibo2
             fibo2 = fibo1 + fibo2
             fibo1 = a
-            chislo = fibo2
-            while (chislo > 0) {
-                chislo = chislo / 10
-                kolvo++
+            number = fibo2
+            while (number > 0) {
+                number = number / 10
+                amount++
             }
         }
-        if (n != kolvo) {
-            kolvo = kolvo - n
-            for (i in 0..kolvo - 1)
-                fibo2 = fibo2 / 10
+        if (n != amount) {
+            amount -= n
+            doubleswitch = 10.0.pow(amount)
+            amount = doubleswitch.toInt()
+            fibo2 /= amount
         }
-        if (fibo2 >= 10)
-            fibo2 = fibo2 % 10
+        fibo2 %= 10
     }
     return fibo2
 }

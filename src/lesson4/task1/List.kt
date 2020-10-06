@@ -251,7 +251,7 @@ fun roman(n: Int): String = TODO()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    val odin = listOf("0", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val one = listOf("0", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     val ten =
         listOf(
             "0",
@@ -265,10 +265,10 @@ fun russian(n: Int): String {
             "восемьдесят",
             "девяносто"
         )
-    val sto =
+    val hundred =
         listOf("0", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
-    val k = listOf("тысяч", "тысячи", "тысяча")
-    val iskl = listOf(
+    val thousand = listOf("тысяч", "тысячи", "тысяча")
+    val exception = listOf(
         "десять",
         "одиннадцать",
         "двенадцать",
@@ -280,66 +280,54 @@ fun russian(n: Int): String {
         "восемнадцать",
         "девятнадцать"
     )
-    var schet = 0
-    var a = n
-    var b = 0
-    var c = a
-    var d = 0
-    var otvet: String = "0"
-    if (a % 100 < 20 && a % 100 > 9) {
-        b = a
-        b = b % 10
-        otvet = (iskl[b]).plus(otvet)
-        schet = schet + 2
-        b = 0
-        a = a / 100
-    }
-    while (a > 0) {
-        b = a % 10
-        schet++
-        if (schet == 4) {
-            when {
-                b == 1 -> d = 2
-                b < 5 && b > 1 -> d = 1
-                else -> d = 0
+    var count = 0
+    var number = n
+    var number2 = 0
+    val numbercheck = number
+    var thousandcheck = 0
+    var answer = "0"
+    while (number > 0) {
+        number2 = number % 10
+        count++
+        if (count == 4) {
+            thousandcheck = when {
+                number2 == 1 -> 2
+                number2 in 2..4 -> 1
+                else -> 0
             }
-            if (c % 100 != 0)
-                otvet = (k[d]).plus(" ").plus(otvet)
+            answer = if (numbercheck % 100 != 0)
+                (thousand[thousandcheck]).plus(" ").plus(answer)
             else
-                otvet = (k[d]).plus(otvet)
+                (thousand[thousandcheck]).plus(answer)
 
         }
-        if (b != 0) {
-            when {
-                schet == 1 -> otvet = (odin[b]).plus(otvet)
-                schet == 2 -> otvet = (ten[b]).plus(" ").plus(otvet)
-                schet == 3 -> otvet = (sto[b]).plus(" ").plus(otvet)
-            }
-
-            when {
-                schet == 4 -> {
-
-                    if (a % 100 < 20 && a % 100 > 9) {
-                        b = a
-                        b = b % 10
-                        otvet = (iskl[b]).plus(" ").plus(otvet)
-                        schet++
-                        b = 0
-                        a = a / 10
+        if (number2 != 0) {
+            when (count) {
+                1, 4 -> {
+                    if (number % 100 in 10..19) {
+                        number2 = number % 10
+                        answer = if (count == 1)
+                            (exception[number2]).plus(answer)
+                        else
+                            (exception[number2]).plus(" ").plus(answer)
+                        count++
+                        number2 = 0
+                        number /= 10
                     } else {
-                        when {
-                            b == 1 -> otvet = ("одна").plus(" ").plus(otvet)
-                            b == 2 -> otvet = ("две").plus(" ").plus(otvet)
-                            else -> otvet = (odin[b]).plus(" ").plus(otvet)
+                        answer = when {
+                            number2 == 1 && count == 4 -> ("одна").plus(" ").plus(answer)
+                            number2 == 2 && count == 4 -> ("две").plus(" ").plus(answer)
+                            count == 1 -> (one[number2]).plus(answer)
+                            else -> (one[number2]).plus(" ").plus(answer)
                         }
                     }
                 }
-                schet == 5 -> otvet = (ten[b]).plus(" ").plus(otvet)
-                schet == 6 -> otvet = (sto[b]).plus(" ").plus(otvet)
+                2, 5 -> answer = (ten[number2]).plus(" ").plus(answer)
+                3, 6 -> answer = (hundred[number2]).plus(" ").plus(answer)
             }
         }
-        a = a / 10
+        number /= 10
     }
-    otvet = otvet.replace("0", "")
-    return otvet
+    answer = answer.replace("0", "")
+    return answer
 }
