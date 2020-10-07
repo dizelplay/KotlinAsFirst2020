@@ -283,22 +283,22 @@ fun russian(n: Int): String {
     var count = 0
     var number = n
     var number2 = 0
-    val numbercheck = number
-    var thousandcheck = 0
+    val numberCheck = number
+    var thousandCheck = 0
     var answer = "0"
     while (number > 0) {
         number2 = number % 10
         count++
         if (count == 4) {
-            thousandcheck = when {
+            thousandCheck = when {
                 number2 == 1 -> 2
                 number2 in 2..4 -> 1
                 else -> 0
             }
-            answer = if (numbercheck % 100 != 0)
-                (thousand[thousandcheck]).plus(" ").plus(answer)
+            answer = if (numberCheck % 100 != 0)
+                (thousand[thousandCheck]).plus(" ").plus(answer)
             else
-                (thousand[thousandcheck]).plus(answer)
+                (thousand[thousandCheck]).plus(answer)
 
         }
         if (number2 != 0) {
