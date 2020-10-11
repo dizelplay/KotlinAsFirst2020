@@ -218,12 +218,7 @@ fun squareSequenceDigit(n: Int): Int {
         }
     }
     amount -= n
-    var doubleSwitch = 0.0
-    doubleSwitch = 10.0.pow(amount)
-    amount = doubleSwitch.toInt()
-    number2 /= amount
-    number2 %= 10
-    return number2
+    return number2 / 10.0.pow(amount).toInt() % 10
 
 }
 
@@ -245,20 +240,16 @@ fun fibSequenceDigit(n: Int): Int {
     if (n > 2) {
         while (amount < n) {
             a = fibo2
-            fibo2 = fibo1 + fibo2
+            fibo2 += fibo1
             fibo1 = a
             number = fibo2
             while (number > 0) {
-                number = number / 10
+                number /= 10
                 amount++
             }
         }
         amount -= n
-        var doubleSwitch = 0.0
-        doubleSwitch = 10.0.pow(amount)
-        amount = doubleSwitch.toInt()
-        fibo2 /= amount
-        fibo2 %= 10
+        return fibo2 / 10.0.pow(amount).toInt() % 10
     }
-    return fibo2
+    return fibo1
 }
