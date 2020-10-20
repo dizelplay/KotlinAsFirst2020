@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -217,7 +218,18 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var listSize = digits.size - 1
+    var result = 0
+    var number = 0
+    while (0 <= listSize) {
+        result += (digits[listSize] * base.toDouble().pow(number).toInt())
+        number++
+        listSize--
+    }
+    return result
+}
+
 
 /**
  * Сложная (4 балла)
@@ -282,49 +294,40 @@ fun russian(n: Int): String {
     )
     var count = 0
     var number = n
-    var number2 = 0
-    val numberCheck = number
-    var thousandCheck = 0
     var answer = "0"
     while (number > 0) {
-        number2 = number % 10
+        var number2 = number % 10
         count++
         if (count == 4) {
-            thousandCheck = when {
-                number2 == 1 -> 2
-                number2 in 2..4 -> 1
+            val thousandCheck = when (number2) {
+                1 -> 2
+                in 2..4 -> 1
                 else -> 0
             }
-            answer = if (numberCheck % 100 != 0)
-                (thousand[thousandCheck]).plus(" ").plus(answer)
-            else
-                (thousand[thousandCheck]).plus(answer)
-
+            answer = (thousand[thousandCheck]).plus(answer)
+            answer = " $answer"
         }
         if (number2 != 0) {
             when (count) {
                 1, 4 -> {
                     if (number % 100 in 10..19) {
                         number2 = number % 10
-                        answer = if (count == 1)
-                            (exception[number2]).plus(answer)
-                        else
-                            (exception[number2]).plus(" ").plus(answer)
+                        answer = (exception[number2]).plus(answer)
                         count++
-                        number2 = 0
                         number /= 10
                     } else {
                         answer = when {
-                            number2 == 1 && count == 4 -> ("одна").plus(" ").plus(answer)
-                            number2 == 2 && count == 4 -> ("две").plus(" ").plus(answer)
-                            count == 1 -> (one[number2]).plus(answer)
-                            else -> (one[number2]).plus(" ").plus(answer)
+                            number2 == 1 && count == 4 -> ("одна").plus(answer)
+                            number2 == 2 && count == 4 -> ("две").plus(answer)
+                            else -> (one[number2]).plus(answer)
                         }
                     }
                 }
-                2, 5 -> answer = (ten[number2]).plus(" ").plus(answer)
-                3, 6 -> answer = (hundred[number2]).plus(" ").plus(answer)
+                2, 5 -> answer = (ten[number2]).plus(answer)
+                3, 6 -> answer = (hundred[number2]).plus(answer)
             }
+            if (number > 10)
+                answer = " $answer"
         }
         number /= 10
     }
