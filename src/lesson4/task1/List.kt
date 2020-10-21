@@ -299,9 +299,10 @@ fun russian(n: Int): String {
         var number2 = number % 10
         count++
         if (count == 4) {
-            val thousandCheck = when (number2) {
-                1 -> 2
-                in 2..4 -> 1
+            val thousandCheck = when {
+                number % 100 in 11..19 -> 0
+                number2 == 1 -> 2
+                number2 in 2..4 -> 1
                 else -> 0
             }
             answer = (thousand[thousandCheck]).plus(answer)
