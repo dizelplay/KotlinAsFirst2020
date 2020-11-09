@@ -138,7 +138,33 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var result = 0
+    val parts = expression.split(" ")
+    result = parts[0].toInt()
+    if (parts.size % 2 == 0)
+        throw IllegalArgumentException()
+    if (parts.size == 1) {
+        if ("+" in expression || "-" in expression)
+            throw IllegalArgumentException()
+        else
+            return parts[0].toInt()
+    }
+    if ("+" in parts[0] || "-" in parts[0])
+        throw IllegalArgumentException()
+    for (i in 1 until parts.size step 2) {
+        if ("+" in parts[i + 1] || "-" in parts[i + 1])
+            throw IllegalArgumentException()
+        if (parts[i] == "+") {
+            result += parts[i + 1].toInt()
+        } else if (parts[i] == "-") {
+            result -= parts[i + 1].toInt()
+        } else
+            throw IllegalArgumentException()
+    }
+
+    return result
+}
 
 /**
  * Сложная (6 баллов)
@@ -162,7 +188,26 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var pair = 0 to 0.0
+    var check = false
+    if (description.indexOf(";") == -1)
+        check = true
+    val parts = description.split("; ", " ")
+    if (parts.size < 2)
+        return ""
+    if (parts.size > 2 && check)
+        return ""
+    try {
+        for (i in 1..parts.size step 2) {
+            if (pair.second < parts[i].toDouble())
+                pair = i to parts[i].toDouble()
+        }
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    return parts[pair.first - 1]
+}
 
 /**
  * Сложная (6 баллов)

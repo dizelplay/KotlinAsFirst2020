@@ -308,7 +308,7 @@ fun russian(n: Int): String {
             answer = (thousand[thousandCheck]).plus(answer)
             answer = " $answer"
         }
-        if (number2 != 0) {
+        if (number2 != 0 || number % 100 == 10) {
             when (count) {
                 1, 4 -> {
                     if (number % 100 in 10..19) {
