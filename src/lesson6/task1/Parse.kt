@@ -189,7 +189,7 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть больше нуля либо равны нулю.
  */
 fun mostExpensive(description: String): String {
-    var pair = 0 to 0.0
+    var pair = 0 to -1.0
     var check = false
     if (description.indexOf(";") == -1)
         check = true
