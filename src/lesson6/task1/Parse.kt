@@ -139,28 +139,30 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    var result = 0
     val parts = expression.split(" ")
-    result = parts[0].toInt()
+    var result = parts[0].toInt()
     if (parts.size % 2 == 0)
         throw IllegalArgumentException()
     if (parts.size == 1) {
         if ("+" in expression || "-" in expression)
             throw IllegalArgumentException()
         else
-            return parts[0].toInt()
+            return result
     }
     if ("+" in parts[0] || "-" in parts[0])
         throw IllegalArgumentException()
     for (i in 1 until parts.size step 2) {
         if ("+" in parts[i + 1] || "-" in parts[i + 1])
             throw IllegalArgumentException()
-        if (parts[i] == "+") {
-            result += parts[i + 1].toInt()
-        } else if (parts[i] == "-") {
-            result -= parts[i + 1].toInt()
-        } else
-            throw IllegalArgumentException()
+        when {
+            parts[i] == "+" -> {
+                result += parts[i + 1].toInt()
+            }
+            parts[i] == "-" -> {
+                result -= parts[i + 1].toInt()
+            }
+            else -> throw IllegalArgumentException()
+        }
     }
 
     return result
@@ -190,13 +192,8 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  */
 fun mostExpensive(description: String): String {
     var pair = 0 to -1.0
-    var check = false
-    if (description.indexOf(";") == -1)
-        check = true
     val parts = description.split("; ", " ")
     if (parts.size < 2)
-        return ""
-    if (parts.size > 2 && check)
         return ""
     try {
         for (i in 1..parts.size step 2) {
