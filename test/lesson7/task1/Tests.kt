@@ -441,4 +441,10 @@ Basic, Ruby, Swift.
 
         File("temp.txt").delete()
     }
+
+    @Test
+    fun ticTacToe() {
+        assertEquals(ticTacToe("input/ticTacToe.txt"), true)
+    }
 }
+

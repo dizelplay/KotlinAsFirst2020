@@ -471,3 +471,106 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
 }
 
+fun ticTacToeHelp(symbol: Char, zeroCount: Int, crossCount: Int): Pair<Int, Int> {
+    var zeroCount1 = zeroCount
+    var crossCount1 = crossCount
+    when (symbol) {
+        'o' -> {
+            zeroCount1++
+            crossCount1 = 0
+        }
+        'x' -> {
+            zeroCount1 = 0
+            crossCount1++
+        }
+        else -> {
+            zeroCount1 = 0
+            crossCount1 = 0
+        }
+    }
+    return zeroCount1 to crossCount1
+}
+
+fun ticTacToe(inputName: String): Boolean {
+    val result = false
+    val list = mutableListOf<String>()
+    File(inputName).forEachLine { line ->
+        list.add(line)
+    }
+    var zeroCount = 0
+    var crossCount = 0
+    for (i in 0..14) {
+        for (j in 0..14) {
+            zeroCount = ticTacToeHelp(list[i][j], zeroCount, crossCount).first
+            crossCount = ticTacToeHelp(list[i][j], zeroCount, crossCount).second
+            if (zeroCount == 5 || crossCount == 5) {
+                return true
+            }
+        }
+    }
+    zeroCount = 0
+    crossCount = 0
+    for (i in 0..14) {
+        for (j in 0..14) {
+            zeroCount = ticTacToeHelp(list[j][i], zeroCount, crossCount).first
+            crossCount = ticTacToeHelp(list[j][i], zeroCount, crossCount).second
+            if (zeroCount == 5 || crossCount == 5) {
+                return true
+            }
+        }
+    }
+    zeroCount = 0
+    crossCount = 0
+    for (i in 0..10) {
+        var vertical = -1
+        for (horizontal in i..14) {
+            vertical++
+            zeroCount = ticTacToeHelp(list[horizontal][vertical], zeroCount, crossCount).first
+            crossCount = ticTacToeHelp(list[horizontal][vertical], zeroCount, crossCount).second
+            if (zeroCount == 5 || crossCount == 5) {
+                return true
+            }
+        }
+    }
+    zeroCount = 0
+    crossCount = 0
+    for (i in 0..10) {
+        var horizontal = -1
+        for (vertical in i..14) {
+            horizontal++
+            zeroCount = ticTacToeHelp(list[horizontal][vertical], zeroCount, crossCount).first
+            crossCount = ticTacToeHelp(list[horizontal][vertical], zeroCount, crossCount).second
+            if (zeroCount == 5 || crossCount == 5) {
+                return true
+            }
+        }
+    }
+    zeroCount = 0
+    crossCount = 0
+    for (i in 4..14) {
+        var horizontal = 15
+        for (vertical in i..14) {
+            horizontal--
+            zeroCount = ticTacToeHelp(list[horizontal][vertical], zeroCount, crossCount).first
+            crossCount = ticTacToeHelp(list[horizontal][vertical], zeroCount, crossCount).second
+            if (zeroCount == 5 || crossCount == 5) {
+                return true
+            }
+        }
+    }
+    zeroCount = 0
+    crossCount = 0
+    for (i in 0..10) {
+        var vertical = 15
+        for (horizontal in i..14) {
+            vertical--
+            zeroCount = ticTacToeHelp(list[horizontal][vertical], zeroCount, crossCount).first
+            crossCount = ticTacToeHelp(list[horizontal][vertical], zeroCount, crossCount).second
+            if (zeroCount == 5 || crossCount == 5) {
+                return true
+            }
+        }
+    }
+    return result
+}
+
