@@ -18,7 +18,7 @@ package lesson12.task1
  * Класс должен иметь конструктор по умолчанию (без параметров).
  */
 class PhoneBook {
-    private var telBook = mutableMapOf("0" to mutableSetOf("0"))
+    private var telBook = mutableMapOf<String, MutableSet<String>>()
 
     /**
      * Добавить человека.
@@ -74,23 +74,17 @@ class PhoneBook {
      * либо у него не было такого номера телефона.
      */
     fun removePhone(name: String, phone: String): Boolean {
-        if (!telBook.containsKey(name))
-            return false
-        if (telBook[name]?.contains(phone) == false)
-            return false
-        telBook[name]?.remove(phone)
-        return true
+
+        if (telBook[name]?.remove(phone) == true)
+            return true
+        return false
     }
 
     /**
      * Вернуть все номера телефона заданного человека.
      * Если этого человека нет в книге, вернуть пустой список
      */
-    fun phones(name: String): Set<String> {
-        return if (telBook.containsKey(name))
-            telBook[name]!!
-        else emptySet()
-    }
+    fun phones(name: String): Set<String> = telBook[name]!!
 
     /**
      * Вернуть имя человека по заданному номеру телефона.

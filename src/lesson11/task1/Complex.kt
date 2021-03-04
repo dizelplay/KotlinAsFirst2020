@@ -11,16 +11,20 @@ package lesson11.task1
  *
  * Аргументы конструктора -- вещественная и мнимая часть числа.
  */
-fun stringToDouble(s: String): Pair<Double, Double> {
+
+
+fun Complex(s: String): Complex {
     var s2 = s.replace("i", "")
     if (s.indexOf("-") == 0)
         s2 = s2.removeRange(0, 1)
     val numberList: MutableList<String> = s2.split("+", "-") as MutableList<String>
     if (s.lastIndexOf("-") != -1 && s.lastIndexOf("-") != 0)
         numberList[1] = numberList[1].padStart(numberList[1].length + 1, '-')
-    if (s.indexOf("-") == 0)
+    val matchResult = Regex("""-(\d)[+-](\d)""").find(s)
+    if (matchResult != null)
         numberList[0] = numberList[0].padStart(numberList[0].length + 1, '-')
-    return numberList[0].toDouble() to numberList[1].toDouble()
+    return Complex(numberList[0].toDouble(), numberList[1].toDouble())
+
 }
 
 class Complex(val re: Double, val im: Double) {
@@ -34,7 +38,7 @@ class Complex(val re: Double, val im: Double) {
     /**
      * Конструктор из строки вида x+yi
      */
-    constructor(s: String) : this(stringToDouble(s).first, stringToDouble(s).second)
+
 
     /**
      * Сложение.
@@ -75,9 +79,9 @@ class Complex(val re: Double, val im: Double) {
      */
     override fun toString(): String {
         return if (re < 0)
-            im.toString() + re.toString() + "i"
+            "$im$re i"
         else
-            im.toString() + "+" + re.toString() + "i"
+            "$im+$re i"
     }
 
     override fun hashCode(): Int {
