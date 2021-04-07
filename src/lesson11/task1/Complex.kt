@@ -14,16 +14,14 @@ package lesson11.task1
 
 
 fun Complex(s: String): Complex {
-    var s2 = s.replace("i", "")
-    if (s.indexOf("-") == 0)
-        s2 = s2.removeRange(0, 1)
-    val numberList: MutableList<String> = s2.split("+", "-") as MutableList<String>
-    if (s.lastIndexOf("-") != -1 && s.lastIndexOf("-") != 0)
-        numberList[1] = numberList[1].padStart(numberList[1].length + 1, '-')
-    val matchResult = Regex("""-(\d)[+-](\d)""").find(s)
-    if (matchResult != null)
-        numberList[0] = numberList[0].padStart(numberList[0].length + 1, '-')
-    return Complex(numberList[0].toDouble(), numberList[1].toDouble())
+
+
+
+    val im = Regex("""[+|-]?[0-9.]*i""").find(s)?.value?.dropLast(1)
+    val re = Regex("""^[+|-]?[0-9.]+(?![i])""").find(s)?.value
+
+    return Complex(re?.toDouble() ?: 0.0, im?.toDouble() ?: 0.0)
+
 
 }
 
@@ -79,9 +77,9 @@ class Complex(val re: Double, val im: Double) {
      */
     override fun toString(): String {
         return if (re < 0)
-            "$im$re i"
+            "$im${re}i"
         else
-            "$im+$re i"
+            "$im+${re}i"
     }
 
     override fun hashCode(): Int {
