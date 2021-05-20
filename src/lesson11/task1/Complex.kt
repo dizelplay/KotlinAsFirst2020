@@ -18,7 +18,7 @@ fun Complex(s: String): Complex {
 
 
     val im = Regex("""[+|-]?[0-9.]*i""").find(s)?.value?.dropLast(1)
-    val re = Regex("""^[+|-]?[0-9.]+(?![i])""").find(s)?.value
+    val re = Regex("""[+|-]?[0-9.]+(?![i])""").find(s)?.value
 
     return Complex(re?.toDouble() ?: 0.0, im?.toDouble() ?: 0.0)
 
